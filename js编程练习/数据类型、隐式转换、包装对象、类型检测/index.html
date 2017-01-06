@@ -1,0 +1,76 @@
+/*
+ *判断传入的两个数组是否相似。具体需求：
+ *1. 数组中的成员类型相同，顺序可以不同。例如[1, true] 与 [false, 2]是相似的。
+ *2. 数组的长度一致。
+ *3. 类型的判断范围，需要区分:String, Boolean, Number, undefined, null, function,date, window.
+ *当以上全部满足，则返回"判定结果:通过"，否则返回"判定结果:不通过"。
+ */
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>比较数组相似</title>
+</head>
+<body>
+    <script type = "text/javascript">
+        /*
+         *param1 Array
+         *param2 Array
+         *return true or false
+         */
+         function arraysSimilar(arr1,arr2){
+            if(arr1 instanceof Array && arr2 instanceof Array){
+                var length1 = arr1.length;
+                var length2 = arr2.length;
+                var typeArr1 = [],
+                    typeArr2 = [];
+                if(length1){
+                    if(length1 !=length2){return false};
+                    for(var i = 0;i<length1;i++){
+                        typeArr1[i] = typeOf(arr1[i]);
+                        typeArr2[i] = typeOf(arr2[i]);
+                    }
+                    if(typeArr1.sort().join() == typeArr2.sort().join()){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }else{
+                    //空数组相似
+                    return true;
+                }
+            }else{
+                //非数组
+                return false;
+            }
+ 
+         }
+         /*
+         *param1 item
+         *return type(String, Boolean, Number, undefined, null, function,date, window.)
+         */
+         function typeOf(item){
+            var type = typeof(item);
+            if(type!="object"){
+                return type;
+            }else if(item === null){
+                return "null"; 
+            }else if(item === window){
+                return "window";
+            }else{
+                if(item instanceof Function){
+                    return "function";
+                }else if(item instanceof Date){
+                   return "date";
+                }else if(item instanceof Array){
+                   return "Array";
+                }else{
+                  return "object";}
+                   
+            }
+         }
+    </script>
+    <script src="testData.js"></script>
+</body>
+</html>

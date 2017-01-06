@@ -1,0 +1,189 @@
+<!DOCTYPE html>  
+<html>  
+    <head>  
+        <title></title>  
+    </head>  
+    <body>  
+    </body>  
+</html>  
+<html lang="en">  
+    <head>  
+        <meta charset="UTF-8">  
+        <title>Document</title>  
+        <style>  
+        *{padding: 0; margin: 0;}  
+        body{text-align: center;}  
+        li{ list-style: none;}  
+        ul{margin: 30px auto 0px; border:1px solid #000; border-bottom: none; border-right: none;}  
+        li{border:1px solid #000; border-top:none; border-left: 0; float: left;}  
+        .sty1{background: green;}  
+        .sty2{background: blue;}  
+        .sty3{background: red;}  
+        #input1{margin: 10px auto;}         
+         </style>  
+        <script>  
+        window.onload = function(){  
+            var oUl = document.getElementById('ul1');  
+            var aLi = oUl.getElementsByTagName('li');  
+            var oBtn = document.getElementById('input1');  
+            var beginLi = oUl.getElementsByClassName('sty1');  
+            var endLi = oUl.getElementsByClassName('sty3');  
+            var gridSize =20;  
+            var openArr =[];  
+            var closeArr =[];  
+            var map =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,2,0,0,3,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0  
+            ];  
+  
+            init();  
+            function init(){  
+                createMap();  
+                oBtn.onclick=function(){  
+                    openFn();  
+                }  
+            }  
+  
+            function createMap(){  
+                oUl.style.width= Math.sqrt(map.length)*(gridSize+1)+'px';   
+                oUl.style.height= Math.sqrt(map.length)*(gridSize+1)+'px';   
+                for(var i=0; i<map.length;i++){  
+                    var oLi = document.createElement('li');  
+                    oLi.style.width = gridSize+'px';  
+                    oLi.style.height = gridSize+'px';  
+                    oUl.appendChild(oLi);  
+                    if(map[i]==1){  
+                        oLi.className = 'sty1';  
+                        openArr.push(oLi);  
+                    }  
+                    if(map[i]==2){  
+                        oLi.className = 'sty2';  
+                        closeArr.push(oLi);  
+                    }  
+                    if(map[i]==3){  
+                        oLi.className = 'sty3';  
+                    }  
+                }  
+  
+            }  
+  
+            function openFn(){  
+                var nowLi = openArr.shift();  
+                if( nowLi == endLi[0] ){  
+                    showLine();  
+                    //console.log(1)  
+                    return;  
+                }  
+                closeFn(nowLi);  
+                findLi(nowLi);  
+                openArr.sort(function(li1,li2){  
+                    return li1.num - li2.num;  
+                });  
+                openFn();  
+  
+  
+            }  
+  
+            function closeFn(li){  
+                closeArr.push(li)  
+            }  
+  
+            function findLi(nowLi){  
+                var arr=[];  
+                for(var i=0; i< aLi.length;i++){  
+                    if(filter(aLi[i])){  
+                        arr.push(aLi[i])  
+                    }  
+                }  
+  
+  
+                function filter(li){  
+                    for(var i=0; i<closeArr.length;i++){  
+                        if(li == closeArr[i]){  
+                            return false  
+                        }  
+                    }  
+  
+                    for(var i=0; i<openArr.length;i++){  
+                        if(li == openArr[i]){  
+                            return false  
+                        }  
+                    }  
+                    return true;  
+                }  
+  
+  
+                for(var i=0; i< arr.length; i++){  
+                    if(Math.abs(nowLi.offsetLeft-arr[i].offsetLeft)<=(gridSize+1) &&  
+                    Math.abs(nowLi.offsetTop-arr[i].offsetTop)<=(gridSize+1) ){  
+                        arr[i].num = f(arr[i]);  
+                        arr[i].parent = nowLi;  
+                        openArr.push(arr[i])  
+                    }  
+                }  
+            }  
+  
+            function showLine(){  
+                var result = [];  
+                var lastLi = closeArr.pop();  
+                var iNow = 0;  
+                findParent(lastLi);  
+                function findParent(li){  
+                    result.unshift(li);  
+                    if( li.parent == beginLi[0] ){  
+                        return;  
+                    }  
+                    findParent(li.parent);  
+                }  
+                var timer = setInterval(function(){  
+                      
+                    result[iNow].style.background = 'red';  
+                    iNow++;  
+                    if(iNow == result.length){  
+                        clearInterval(timer);  
+                    }  
+                },500);  
+                  
+            }  
+            function f(nodeLi){  
+                return g(nodeLi)+h(nodeLi)  
+            }  
+  
+            function g(nodeLi){  
+                var a = beginLi[0].offsetLeft - nodeLi.offsetLeft;  
+                var b = beginLi[0].offsetTop - nodeLi.offsetTop;  
+                return Math.sqrt(a*a + b*b);  
+            }  
+            function h(nodeLi){  
+                var a = endLi[0].offsetLeft - nodeLi.offsetLeft;  
+                var b = endLi[0].offsetTop - nodeLi.offsetTop;  
+                return Math.sqrt(a*a + b*b);  
+            }  
+        }  
+        </script>  
+    </head>  
+    <body>  
+        <ul id="ul1">  
+        </ul>  
+        <input type="button" id="input1" value="开始"/>  
+    </body>  
+</html>  
+
+

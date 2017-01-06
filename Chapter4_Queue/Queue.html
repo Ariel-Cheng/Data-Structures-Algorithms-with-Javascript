@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title></title>
+    <meta charset="utf-8">
+	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="./jquery-1.4.js"></script>
+	<script type="text/javascript" src="Queue.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>医用叫号页面</h1>
+    </div>   
+    <form role = "form">
+    <h3>排队录入</h3>
+    <input class="form-control" placeholder="enter name" required autofocus id="name">
+    <input class="form-control" placeholder="enter priority" required id="priority">
+    <input type="button" class="btn btn-lg btn-primary btn-block" id="signIn" value="sign in"/>   
+    </form>
+    <form role = "form">
+    <h3>叫号听诊</h3>
+    <input class="btn btn-lg btn-primary btn-block" id="call" value="call"/> 
+    <textarea name="content" rows="3" class="form-control" id="content"></textarea>    
+    </form>
+    <form role = "form">
+    <h3>等候人员</h3>
+    <input class="btn btn-lg btn-primary btn-block" id="show" value="show"/>
+    <textarea name="detail" rows="3" class="form-control" id="detail"></textarea>    
+    </form>   
+    </form>
+
+</div>
+
+</body>
+</html>

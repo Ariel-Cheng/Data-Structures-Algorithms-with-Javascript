@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hahahahha</title>
+    <link rel="stylesheet" href="文档/jQuery书中的源码/styles/core.css"/>
+    <script type="text/javascript" src="jquery-1.4.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("<p>Hi there!</p>").insertAfter("#followMe");//在文档就绪处理器中创建HTML元素
+        });
+    </script>
+</head>
+<body>
+    <p id="followMe">Follow me!</p>//已经存在的元素，动态创建的元素会在此元素之后
+</body>
+</html>
